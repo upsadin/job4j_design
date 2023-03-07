@@ -13,13 +13,15 @@ public class MatrixIt implements Iterator<Integer> {
     }
 
     /**
-     * Метод проверяет наличие следующего элемента для метода {@next()}
-     * Сначала проверяет, не привысил ли row возможного размера массива,
-     * потом пропускает пустые вложенные массивы
-     * @return булево значение, показывающее возможность или нет сделать следующего шага методу {@next()}
+     * Метод проверяет наличие следующего элемента для метода {@link #next()}
+     * @return булево значение, показывающее возможность или нет сделать следующего шага методу {@link #next()}
      */
     @Override
     public boolean hasNext() {
+        if (column > data[row].length - 1 && data[row].length > 0) {
+            row++;
+            column = 0;
+        }
         if (row < data.length) {
             while (data[row].length == 0) {
                 if (row + 1 >= data.length) {
@@ -32,22 +34,15 @@ public class MatrixIt implements Iterator<Integer> {
     }
 
     /**
-     * Через метод {@hasNext()} проверяет наличие следующего элемента и
+     * Через метод {@link #hasNext()}  проверяет наличие следующего элемента и
      * либо возвращает его, либо исключение NoSuchElementException
-     * @return элемент {@data} или исключение
+     * @return элемент {@link #data} или исключение
      */
     @Override
     public Integer next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        Integer rsl = data[row][column];
-        if (column == data[row].length - 1) {
-            row++;
-            column = 0;
-        } else {
-            column++;
-        }
-        return rsl;
+        return data[row][column++];
     }
 }
