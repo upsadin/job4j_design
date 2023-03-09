@@ -22,14 +22,9 @@ public class MatrixIt implements Iterator<Integer> {
             row++;
             column = 0;
         }
-        if (row < data.length) {
-            while (data[row].length == 0) {
-                if (row + 1 >= data.length) {
-                return false;
-                }
-            row++;
+            while (row < data.length && data[row].length == 0) {
+                row++;
             }
-        }
         return row < data.length;
     }
 
