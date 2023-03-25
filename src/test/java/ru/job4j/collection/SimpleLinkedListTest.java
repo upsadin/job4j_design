@@ -89,4 +89,23 @@ class SimpleLinkedListTest {
         assertThat(second.next()).isEqualTo(2);
         assertThat(second.hasNext()).isFalse();
     }
+
+    @Test
+    void whenGetTwoDIfferentIterator() {
+        Iterator<Integer> first = list.iterator();
+        assertThat(first.hasNext()).isTrue();
+        assertThat(first.next()).isEqualTo(1);
+        assertThat(first.hasNext()).isTrue();
+        assertThat(first.next()).isEqualTo(2);
+        assertThat(first.hasNext()).isFalse();
+        list.add(3);
+        Iterator<Integer> second = list.iterator();
+        assertThat(second.hasNext()).isTrue();
+        assertThat(second.next()).isEqualTo(1);
+        assertThat(second.hasNext()).isTrue();
+        assertThat(second.next()).isEqualTo(2);
+        assertThat(second.hasNext()).isTrue();
+        assertThat(second.next()).isEqualTo(3);
+        assertThat(second.hasNext()).isFalse();
+    }
 }

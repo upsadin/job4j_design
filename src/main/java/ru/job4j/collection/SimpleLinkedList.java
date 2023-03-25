@@ -14,11 +14,11 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     @Override
     public void add(E value) {
         Node<E> newNode = new Node(value, null);
-        if (size == 0) {
+        if (head == null) {
             head = newNode;
         } else {
             Node<E> node = head;
-            for (int i = 1; i < size; i++) {
+            while (node.next != null) {
                 node = node.next;
             }
             node.next = newNode;
@@ -31,10 +31,8 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     public E get(int index) {
         Objects.checkIndex(index, size);
         Node<E> node = head;
-        if (index > 0) {
-            for (int i = 1; i <= index; i++) {
-                node = node.next;
-            }
+        for (int i = 0; i < index; i++) {
+            node = node.next;
         }
         return node.item;
     }
@@ -43,7 +41,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
             private int expectedModCount = modCount;
-            private int point = 0;
             Node<E> nd = head;
 
             @Override
@@ -51,10 +48,7 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                if (size > 0 && point > 0 && nd.next != null) {
-                        nd = nd.next;
-                }
-                return point < size;
+                return nd != null;
             }
 
             @Override
@@ -62,8 +56,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                point++;
-                return nd.item;
+                Node<E> rsl = nd;
+                    nd = nd.next;
+                return rsl.item;
             }
         };
     }
@@ -75,6 +70,27 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         Node(E element, Node<E> next) {
             this.item = element;
             this.next = next;
+        }
+    }
+
+    public static void main(String[] args) {
+        LinkedList<Integer> list;
+        list = new SimpleLinkedList<>();
+        list.add(1);
+        list.add(2);
+        Iterator<Integer> it = list.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+        }
+        list.add(3);
+        Iterator<Integer> it2 = list.iterator();
+        while (it2.hasNext()) {
+            System.out.println(it2.next());
+        }
+        list.add(4);
+        Iterator<Integer> it3 = list.iterator();
+        while (it3.hasNext()) {
+            System.out.println(it3.next());
         }
     }
 }
