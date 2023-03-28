@@ -9,7 +9,7 @@ public class SimpleQueue<T> {
     private int sizeOut = 0;
 
     public T poll() {
-        if (sizeIn == 0) {
+        if (sizeIn == 0 && sizeOut == 0) {
             throw new NoSuchElementException();
         }
         if (sizeOut == 0) {
