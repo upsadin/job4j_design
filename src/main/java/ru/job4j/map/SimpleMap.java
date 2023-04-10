@@ -46,6 +46,17 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return hash & (table.length - 1);
     }
 
+    private int index(K key) {
+        return indexFor(hash(hashcode(key)));
+    }
+
+    private boolean check(K key) {
+        int i = index(key);
+        return (table[i] != null
+                && hashcode(table[i].key) == hashcode(key)
+                && Objects.equals(key, table[i].key));
+    }
+
     private void expand() {
     capacity *= 2;
     count = 0;
@@ -53,35 +64,27 @@ public class SimpleMap<K, V> implements Map<K, V> {
     MapEntry<K, V>[] oldTable = table;
     table = new MapEntry[capacity];
         for (int i = 0; i < oldTable.length; i++) {
-            if (oldTable[i] != null) {
-                put(oldTable[i].key, oldTable[i].value);
+            MapEntry<K, V> cell = oldTable[i];
+            if (cell != null) {
+                table[index(cell.key)] = new MapEntry(cell.key, cell.value);
             }
         }
     }
 
     @Override
     public V get(K key) {
-        int i = indexFor(hash(hashcode(key)));
         V rsl = null;
-        if (table[i] != null) {
-            MapEntry<K, V> exist = table[i];
-            if (hash(hashcode(exist.key)) == hash(hashcode(key))
-            && Objects.equals(key, exist.key)) {
-                rsl = exist.value;
-            }
+        if (check(key)) {
+                rsl = table[index(key)].value;
         }
         return rsl;
     }
 
     @Override
     public boolean remove(K key) {
-        int i = indexFor(hash(hashcode(key)));
-        MapEntry<K, V> exist = table[i];
-        boolean rsl = exist != null;
-        if (rsl
-        && hash(hashcode(key)) == hash(hashcode(exist.key))
-        && Objects.equals(key, exist.key)) {
-            table[i] = null;
+        boolean rsl = check(key);
+        if (rsl) {
+            table[index(key)] = null;
             rsl = true;
             modCount++;
         }
