@@ -39,7 +39,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(int hashCode) {
-        return hashCode ^ (hashCode >>> table.length);
+        return hashCode ^ (hashCode >>> 16);
     }
 
     private int indexFor(int hash) {
@@ -63,10 +63,9 @@ public class SimpleMap<K, V> implements Map<K, V> {
     modCount = 0;
     MapEntry<K, V>[] oldTable = table;
     table = new MapEntry[capacity];
-        for (int i = 0; i < oldTable.length; i++) {
-            MapEntry<K, V> cell = oldTable[i];
+        for (MapEntry<K, V> cell : oldTable) {
             if (cell != null) {
-                table[index(cell.key)] = new MapEntry(cell.key, cell.value);
+                table[index(cell.key)] = cell;
             }
         }
     }
