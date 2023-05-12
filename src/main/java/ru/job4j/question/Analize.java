@@ -16,31 +16,18 @@ public class Analize {
             map.put(users.getId(), users.getName());
         }
         for (User users : current) {
-            if (map.putIfAbsent(users.getId(), users.getName()) == null) {
-                added++;
-            }
-        }
-        map.clear();
-
-        for (User users : current) {
-            map.put(users.getId(), users.getName());
-        }
-        for (User users : previous) {
-            if (map.putIfAbsent(users.getId(), users.getName()) == null) {
-                deleted++;
-            }
-        }
-        map.clear();
-
-        for (User users : previous) {
-            map.put(users.getId(), users.getName());
-        }
-        for (User users : current) {
-        String curr = map.get(users.getId());
+            String curr = map.get(users.getId());
             if (curr != null && !users.getName().equals(curr)) {
                 changed++;
             }
+
+            if (map.putIfAbsent(users.getId(), users.getName()) == null) {
+                added++;
+            }
+
+            map.remove(users.getId());
         }
+        deleted = map.size();
 
         return new Info(added, changed, deleted);
     }
