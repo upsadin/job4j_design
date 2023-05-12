@@ -16,10 +16,9 @@ public class Analize {
             map.put(users.getId(), users.getName());
         }
         for (User users : current) {
-            map.put(users.getId(), users.getName());
-        }
-        if (previous.size() < map.size()) {
-            added++;
+            if (map.putIfAbsent(users.getId(), users.getName()) == null) {
+                added++;
+            }
         }
         map.clear();
 
@@ -27,10 +26,9 @@ public class Analize {
             map.put(users.getId(), users.getName());
         }
         for (User users : previous) {
-            map.put(users.getId(), users.getName());
-        }
-        if (current.size() < map.size()) {
-            deleted++;
+            if (map.putIfAbsent(users.getId(), users.getName()) == null) {
+                deleted++;
+            }
         }
         map.clear();
 
