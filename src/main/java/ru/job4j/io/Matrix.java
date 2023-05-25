@@ -11,11 +11,11 @@ public class Matrix {
             byte[][] table = new byte[size][size];
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
-            out.write(Integer.toString((i + 1) * (j + 1)).getBytes());
+            out.write(((i + 1) * (j + 1) + " ").getBytes());
                 }
                 out.write(System.lineSeparator().getBytes());
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
