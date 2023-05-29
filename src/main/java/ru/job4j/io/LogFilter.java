@@ -22,7 +22,7 @@ public class LogFilter {
         return rsl;
     }
 
- /*   public static void save(List<String> log, String file) {
+    public static void save(List<String> log, String file) {
         try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
             for (String string : log) {
                 out.write(string + System.lineSeparator());
@@ -30,7 +30,7 @@ public class LogFilter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
@@ -38,6 +38,6 @@ public class LogFilter {
         for (String string : log) {
             System.out.println(string);
         }
-    /*    save(log, "data/404.txt");*/
+        save(log, "data/404.txt");
     }
 }
