@@ -22,11 +22,22 @@ public class LogFilter {
         return rsl;
     }
 
+ /*   public static void save(List<String> log, String file) {
+        try (BufferedWriter out = new BufferedWriter(new FileWriter(file))) {
+            for (String string : log) {
+                out.write(string + System.lineSeparator());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }*/
+
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("data/log.txt");
-        log.stream()
-                .forEach(System.out::println);
-
+        for (String string : log) {
+            System.out.println(string);
+        }
+    /*    save(log, "data/404.txt");*/
     }
 }
