@@ -23,9 +23,9 @@ public class Config {
                     .forEach(s -> {
                         String[] array = s.split("=", 2);
                         if (!s.contains("=")
-                                || array[0].length() == 0
-                                || array[1].length() == 0) {
-                            throw new IllegalArgumentException();
+                                || array[0].isEmpty()
+                                || array[1].isEmpty()) {
+                            throw new IllegalArgumentException("Нарушен формат у строки " + s);
                         }
                         this.values.put(array[0], array[1]);
                     });
