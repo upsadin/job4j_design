@@ -29,4 +29,12 @@ class ConfigTest {
         assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("Нарушен формат у строки =jdbc:postgresql://127.0.0.1:5432/trackstudio");
     }
+
+    @Test
+    void whenNotValue() {
+        String path = "./data/not_value.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Нарушен формат у строки hibernate.connection.driver_class=");
+    }
 }

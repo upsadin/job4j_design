@@ -25,7 +25,7 @@ public class Config {
                         if (!s.contains("=")
                                 || array[0].isEmpty()
                                 || array[1].isEmpty()) {
-                            throw new IllegalArgumentException("Нарушен формат у строки " + s);
+                            throw new IllegalArgumentException(String.format("Нарушен формат у строки %s", s));
                         }
                         this.values.put(array[0], array[1]);
                     });
