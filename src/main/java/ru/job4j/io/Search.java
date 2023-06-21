@@ -6,9 +6,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class Search {
     public static void main(String[] args) throws IOException {
+        check(args);
         Path start = Paths.get(".");
         search(start, p -> p.toFile().getName().endsWith(".java")).forEach(System.out::println);
     }
@@ -17,5 +19,18 @@ public class Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    public static boolean check(String[] args) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("Root folder or desired file extension is null");
+        }
+        if (!args[0].contains(".") && !args[0].contains("\\")) {
+            throw new IllegalArgumentException("Root folder is incorrect");
+        }
+        if (args[1].length() < 2 || !args[1].startsWith(".") || !Character.isLetter(args[1].charAt(1))) {
+            throw new IllegalArgumentException("File extension is incorrect");
+        }
+        return true;
     }
 }
