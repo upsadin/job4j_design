@@ -32,9 +32,6 @@ public class Search {
         if (!Files.isDirectory(start)) {
             throw new IllegalArgumentException(String.format("%s is not a directory", start.toAbsolutePath()));
         }
-        if (!args[0].contains(".") && !args[0].contains("\\")) {
-            throw new IllegalArgumentException("Root folder is incorrect");
-        }
         if (args[1].length() < 2 || !args[1].startsWith(".") || !Character.isLetter(args[1].charAt(1))) {
             throw new IllegalArgumentException("File extension is incorrect");
         }
