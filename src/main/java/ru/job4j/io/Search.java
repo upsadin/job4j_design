@@ -11,8 +11,8 @@ import java.util.regex.Pattern;
 public class Search {
     public static void main(String[] args) throws IOException {
         check(args);
-        Path start = Paths.get(".");
-        search(start, p -> p.toFile().getName().endsWith(".java")).forEach(System.out::println);
+        Path start = Paths.get(args[0]);
+        search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
@@ -24,6 +24,13 @@ public class Search {
     public static boolean check(String[] args) {
         if (args.length < 2) {
             throw new IllegalArgumentException("Root folder or desired file extension is null");
+        }
+        Path start = Paths.get(args[0]);
+        if (!Files.exists(start)) {
+            throw new IllegalArgumentException(String.format("%s doesn't exist", start.toAbsolutePath()));
+        }
+        if (!Files.isDirectory(start)) {
+            throw new IllegalArgumentException(String.format("%s is not a directory", start.toAbsolutePath()));
         }
         if (!args[0].contains(".") && !args[0].contains("\\")) {
             throw new IllegalArgumentException("Root folder is incorrect");
