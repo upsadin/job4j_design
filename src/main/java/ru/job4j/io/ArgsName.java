@@ -18,16 +18,8 @@ public class ArgsName {
     private void parse(String[] args) {
         for (String arg : args) {
             check(arg);
-            String[] string = arg.split("=", 2);
-            if (string[0].length() == 1) {
-                throw new IllegalArgumentException(String.format(
-                        "Error: This argument \'%s\' does not contain a key", arg));
-            }
-            if (string[1].isEmpty()) {
-                throw new IllegalArgumentException(String.format(
-                        "Error: This argument \'%s\' does not contain a value", arg));
-            }
-            values.put(string[0].substring(1), string[1]);
+            String[] str = arg.split("=", 2);
+            values.put(str[0].substring(1), str[1]);
         }
     }
 
@@ -48,6 +40,15 @@ public class ArgsName {
         if (!string.contains("=")) {
             throw new IllegalArgumentException(String.format(
                     "Error: This argument \'%s\' does not contain an equal sign", string));
+        }
+        String[] str = string.split("=", 2);
+        if (str[0].length() == 1) {
+            throw new IllegalArgumentException(String.format(
+                    "Error: This argument \'%s\' does not contain a key", string));
+        }
+        if (str[1].isEmpty()) {
+            throw new IllegalArgumentException(String.format(
+                    "Error: This argument \'%s\' does not contain a value", string));
         }
     }
 
