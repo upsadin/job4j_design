@@ -8,46 +8,55 @@ import java.util.*;
 public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
         String delimiter = argsName.get("delimiter");
-        Scanner scanner = new Scanner(Path.of(argsName.get("path")))
-                .useDelimiter(delimiter);
-        String[] firstString = scanner.nextLine().split(delimiter);
-        List<String> listOfColomn = Arrays.asList(firstString);
-        List<Integer> numbers = new ArrayList<>();
-        for (String string : argsName.get("filter").split(",")) {
-            numbers.add(listOfColomn.indexOf(string));
-        }
+        try (Scanner scanner = new Scanner(Path.of(argsName.get("path")))
+                .useDelimiter(delimiter)) {
+            String[] firstString = scanner.nextLine().split(delimiter);
+            List<String> listOfColomn = Arrays.asList(firstString);
+            List<Integer> numbers = new ArrayList<>();
+            for (String string : argsName.get("filter").split(",")) {
+                numbers.add(listOfColomn.indexOf(string));
+            }
 
             String outType = argsName.get("out");
-            PrintWriter out;
-               if (outType.equals("stdout")) {
-                   out = new PrintWriter(System.out, true);
-               } else {
-                   out = new PrintWriter(new BufferedWriter(new FileWriter(outType, true)));
-               }
-                    StringJoiner stringJoiner = new StringJoiner(delimiter);
-        for (int nums : numbers) {
-            stringJoiner.add(firstString[nums]);
-        }
-        out.print(stringJoiner.toString());
-        out.println("");
-        try {
-                   while (scanner.hasNext()) {
-                       stringJoiner = new StringJoiner(delimiter);
-                       String[] strings = scanner.nextLine().split(delimiter);
-
-                       for (int nums : numbers) {
-                           stringJoiner.add(strings[nums]);
-                       }
-                       out.print(stringJoiner.toString());
-                       out.println("");
-                   }
+            StringJoiner stringJoiner = new StringJoiner(delimiter);
+            for (int nums : numbers) {
+                stringJoiner.add(firstString[nums]);
+            }
+            writeOut(outType, stringJoiner);
+            while (scanner.hasNext()) {
+                stringJoiner = new StringJoiner(delimiter);
+                String[] strings = scanner.nextLine().split(delimiter);
+                for (int nums : numbers) {
+                    stringJoiner.add(strings[nums]);
+                }
+                writeOut(outType, stringJoiner);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            out.close();
         }
     }
 
+    /**
+     * Метод для записи одной строки в файл или на консоль в зависимости от входящего аргумента out
+     * @param outType - проверяет входящий аргумент out
+     * @param stringJoiner то, что будет записываться
+     */
+    private static void writeOut(String outType, StringJoiner stringJoiner) {
+        if (outType.equals("stdout")) {
+            System.out.println(stringJoiner.toString());
+        } else {
+            try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outType, true)))) {
+                out.println(stringJoiner.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * валидация входящего аргумента пути файла, с которого будут считываться данные
+     * @param args входящие аргументы
+     */
     public static void validate(ArgsName args) {
         Path path = Path.of(args.get("path"));
         if (!Files.exists(path)) {
