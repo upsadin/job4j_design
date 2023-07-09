@@ -44,7 +44,7 @@ public class CSVReader {
      * @param strings то, что будет записываться
      */
     private static void writeOut(String outType, List<String> strings) {
-            if (outType.equals("stdout")) {
+            if ("stdout".equals(outType)) {
                 for (String string : strings) {
                     System.out.println(string);
                 }
@@ -72,7 +72,7 @@ public class CSVReader {
         if (args.get("delimiter").length() > 1) {
             throw new IllegalArgumentException("delimiter is wrong");
         }
-        if (!args.get("out").equals("stdout") && args.get("out").matches("\\.[a-z]+")) {
+        if (!"stdout".equals(args.get("out")) && args.get("out").matches("\\.[a-z]+")) {
             throw new IllegalArgumentException("out is wrong");
         }
     }
