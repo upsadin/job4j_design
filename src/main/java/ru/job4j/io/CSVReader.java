@@ -44,17 +44,17 @@ public class CSVReader {
      * @param strings то, что будет записываться
      */
     private static void writeOut(String outType, List<String> strings) {
-        for (String string : strings) {
             if (outType.equals("stdout")) {
-                System.out.println(string);
+                for (String string : strings) {
+                    System.out.println(string);
+                }
             } else {
                 try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outType, true)))) {
-                    out.println(string);
+                    strings.forEach(out::println);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        }
     }
 
     /**
