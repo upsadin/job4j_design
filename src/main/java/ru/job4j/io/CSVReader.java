@@ -7,6 +7,7 @@ import java.util.*;
 
 public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
+        List<String> rsl = new ArrayList<>();
         String delimiter = argsName.get("delimiter");
         try (Scanner scanner = new Scanner(Path.of(argsName.get("path")))
                 .useDelimiter(delimiter)) {
@@ -22,33 +23,36 @@ public class CSVReader {
             for (int nums : numbers) {
                 stringJoiner.add(firstString[nums]);
             }
-            writeOut(outType, stringJoiner);
+            rsl.add(stringJoiner.toString());
             while (scanner.hasNext()) {
                 stringJoiner = new StringJoiner(delimiter);
                 String[] strings = scanner.nextLine().split(delimiter);
                 for (int nums : numbers) {
                     stringJoiner.add(strings[nums]);
                 }
-                writeOut(outType, stringJoiner);
+                rsl.add(stringJoiner.toString());
             }
+            writeOut(outType, rsl);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Метод для записи одной строки в файл или на консоль в зависимости от входящего аргумента out
+     * Метод для вывода результирующей коллекции в файл или на консоль в зависимости от входящего аргумента out
      * @param outType - проверяет входящий аргумент out
-     * @param stringJoiner то, что будет записываться
+     * @param strings то, что будет записываться
      */
-    private static void writeOut(String outType, StringJoiner stringJoiner) {
-        if (outType.equals("stdout")) {
-            System.out.println(stringJoiner.toString());
-        } else {
-            try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outType, true)))) {
-                out.println(stringJoiner.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
+    private static void writeOut(String outType, List<String> strings) {
+        for (String string : strings) {
+            if (outType.equals("stdout")) {
+                System.out.println(string);
+            } else {
+                try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(outType, true)))) {
+                    out.println(string);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
