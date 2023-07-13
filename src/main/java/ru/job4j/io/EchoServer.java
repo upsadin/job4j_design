@@ -17,7 +17,6 @@ public class EchoServer {
                         System.out.println("Server close");
                         socket.close();
                         server.close();
-                        break;
                     }
                     for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
