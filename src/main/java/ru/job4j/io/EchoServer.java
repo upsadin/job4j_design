@@ -24,6 +24,7 @@ public class EchoServer {
                         String[] split1 = firstString.split("=");
                         String[] split2 = split1[1].split(" ");
                         out.write(split2[0].getBytes());
+
                     }
                     for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
