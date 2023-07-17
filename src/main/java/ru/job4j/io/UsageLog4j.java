@@ -20,8 +20,7 @@ public class UsageLog4j {
         float weight = 97.7f;
         boolean work = true;
         double family = 2.5;
-        LOG.debug("User info: name {}, lastName {}, age {}, days {}, height {}, " +
-                "weight {}, members of family {}, is working ? - {}",
+        LOG.debug("User info: name {}, lastName {}, age {}, days {}, height {}, weight {}, members of family {}, is working ? - {}",
                 name, lastN, age, ageDays, height, weight, family, work);
 
     }
