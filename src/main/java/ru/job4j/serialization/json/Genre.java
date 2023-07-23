@@ -11,6 +11,10 @@ public class Genre {
 
     }
 
+    public String getGenre() {
+        return genre;
+    }
+
     public Genre(String genre) {
         this.genre = genre;
     }
