@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<cinema realesed="true" name="Die Hard" budget="28000000">
+    <genre genre="action"/>
+    <actorss>
+        <actors> Bruce Willis </actors>
+        <actors> Alan Rickman </actors>
+    </actorss>
+</cinema>
