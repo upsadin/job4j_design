@@ -1,7 +1,16 @@
 package ru.job4j.serialization.json;
 
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Genre {
-    private final String genre;
+    @XmlAttribute
+    private String genre;
+
+    public Genre() {
+
+    }
+
     public Genre(String genre) {
         this.genre = genre;
     }
