@@ -12,7 +12,8 @@ public class GsonTest {
         final Gson gson = new GsonBuilder().create();
         System.out.println(gson.toJson(cinema));
 
-        final String newCinema = "{"
+        final String newCinema =
+                "{"
                 + "\"released\":true,"
                 + "\"genre\":"
                 + "{\"genre\":\"action\"},"
