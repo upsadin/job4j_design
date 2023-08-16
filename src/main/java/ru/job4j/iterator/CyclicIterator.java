@@ -16,10 +16,8 @@ public class CyclicIterator<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        if (data.size() != 0) {
-            if (index > data.size() - 1) {
+        if (data.size() != 0 && index > data.size() - 1) {
                 index = 0;
-            }
         }
         return index < data.size();
     }
