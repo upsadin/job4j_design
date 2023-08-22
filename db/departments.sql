@@ -37,4 +37,5 @@ insert into teen(name, gender) values('Lisa', 'woman'),
 ('Denis', 'man'), ('Vika', 'woman'), ('Olya', 'woman'),
 ('Masha', 'woman'), ('Vlad', 'man'), ('Mark', 'man');
 
-SELECT t1.name, t1.gender, t2.name, t2.gender  FROM teen t1 CROSS JOIN teen t2 where t1.gender != t2.gender;
+SELECT DISTINCT t1.name, t1.gender, t2.name, t2.gender FROM teen t1 CROSS JOIN teen t2 where t1.gender != t2.gender
+and t1.gender = 'man';
