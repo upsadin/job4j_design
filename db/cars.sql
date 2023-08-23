@@ -21,6 +21,7 @@ create table cars(
     transmission_id int references car_transmissions(id)
 );
 
+
 insert into car_bodies(name) values('седан'), ('хэтчбек'), ('пикап'), ('кроссовер'), ('внедорожник');
 insert into car_engines(name) values('карбюратор'), ('инжектор'), ('дизель'), ('электрический'),  ('гибрид');
 insert into car_transmissions(name) values('механическая'), ('автомат'), ('вариатор');
