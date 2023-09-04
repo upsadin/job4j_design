@@ -39,38 +39,28 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void createTable(String tableName) throws Exception {
-        String statement = String.format(
-                "CREATE TABLE IF NOT EXISTS %s ()", tableName
-        );
-        executeUpdate(statement);
+        executeUpdate(String.format("CREATE TABLE IF NOT EXISTS %s ()", tableName));
     }
 
     public void dropTable(String tableName) throws Exception {
-        String statement = String.format(
-                    "DROP TABLE %s", tableName
-            );
-        executeUpdate(statement);
+        executeUpdate(String.format("DROP TABLE %s", tableName));
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
-        String statement = String.format(
-                    "ALTER TABLE %s ADD COLUMN %s %s", tableName, columnName, type
-        );
-        executeUpdate(statement);
+
+        executeUpdate(String.format(
+                "ALTER TABLE %s ADD COLUMN %s %s", tableName, columnName, type
+        ));
     }
 
     public void dropColumn(String tableName, String columnName) throws Exception {
-        String statement = String.format(
-                    "ALTER TABLE %s DROP COLUMN %s", tableName, columnName
-        );
-        executeUpdate(statement);
+        executeUpdate(String.format("ALTER TABLE %s DROP COLUMN %s", tableName, columnName));
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
-        String statement = String.format(
-                    "ALTER TABLE %s RENAME COLUMN %s TO %s", tableName, columnName, newColumnName
-        );
-        executeUpdate(statement);
+        executeUpdate(String.format(
+                "ALTER TABLE %s RENAME COLUMN %s TO %s", tableName, columnName, newColumnName
+        ));
     }
 
     public String getTableScheme(String tableName) throws Exception {
