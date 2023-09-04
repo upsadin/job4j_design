@@ -32,44 +32,45 @@ public class TableEditor implements AutoCloseable {
         this.connection = DriverManager.getConnection(url, username, password);
     }
 
-    public void createTable(String tableName) throws Exception {
-        try (var statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(
-                    "CREATE TABLE IF NOT EXISTS %s ()", tableName
-            ));
+    private void executeUpdate(String statement) throws SQLException {
+        try (var st = connection.createStatement()) {
+            st.executeUpdate(statement);
         }
+    }
+
+    public void createTable(String tableName) throws Exception {
+        String statement = String.format(
+                "CREATE TABLE IF NOT EXISTS %s ()", tableName
+        );
+        executeUpdate(statement);
     }
 
     public void dropTable(String tableName) throws Exception {
-        try (var statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(
+        String statement = String.format(
                     "DROP TABLE %s", tableName
-            ));
-        }
+            );
+        executeUpdate(statement);
     }
 
     public void addColumn(String tableName, String columnName, String type) throws Exception {
-        try (var statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(
+        String statement = String.format(
                     "ALTER TABLE %s ADD COLUMN %s %s", tableName, columnName, type
-            ));
-        }
+        );
+        executeUpdate(statement);
     }
 
     public void dropColumn(String tableName, String columnName) throws Exception {
-        try (var statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(
+        String statement = String.format(
                     "ALTER TABLE %s DROP COLUMN %s", tableName, columnName
-            ));
-        }
+        );
+        executeUpdate(statement);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws Exception {
-        try (var statement = connection.createStatement()) {
-            statement.executeUpdate(String.format(
+        String statement = String.format(
                     "ALTER TABLE %s RENAME COLUMN %s TO %s", tableName, columnName, newColumnName
-            ));
-        }
+        );
+        executeUpdate(statement);
     }
 
     public String getTableScheme(String tableName) throws Exception {
