@@ -15,31 +15,27 @@ public class TableEditor implements AutoCloseable {
 
     private Properties properties;
 
-    public TableEditor(Connection connection) {
-        this.connection = connection;
+    public TableEditor(Properties properties) throws Exception {
+        this.properties = properties;
         initConnection();
     }
 
-    public void initConnection() {
-        connection = null;
-    }
-
-    private static Connection getConnection() throws Exception {
-        Properties config = new Properties();
+    public void initConnection() throws Exception {
+        Properties config = properties;
         try (InputStream in = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
             config.load(in);
         }
         Class.forName(config.getProperty("driver_class"));
         String url = config.getProperty("url");
-        String login = config.getProperty("login");
+        String username = config.getProperty("username");
         String password = config.getProperty("password");
-        return DriverManager.getConnection(url, login, password);
+        this.connection = DriverManager.getConnection(url, username, password);
     }
 
     public void createTable(String tableName) throws Exception {
         try (var statement = connection.createStatement()) {
             statement.executeUpdate(String.format(
-                    "CREATE TABLE IF NOT EXISTS %s", tableName
+                    "CREATE TABLE IF NOT EXISTS %s ()", tableName
             ));
         }
     }
@@ -86,11 +82,10 @@ public class TableEditor implements AutoCloseable {
                     "SELECT * FROM %s LIMIT 1", tableName
             ));
             var metaData = selection.getMetaData();
-            for (int i = 0; i < metaData.getColumnCount(); i++) {
-                buffer.add(String.format(
-                        "%-15s|%-15s%n",
-                        metaData.getColumnName(i), metaData.getColumnTypeName(i)
-                ));
+            for (int i = 1; i <= metaData.getColumnCount(); i++) {
+                buffer.add(String.format("%-15s|%-15s%n",
+                        metaData.getColumnName(i), metaData.getColumnTypeName(i))
+                );
             }
         }
         return buffer.toString();
@@ -104,18 +99,15 @@ public class TableEditor implements AutoCloseable {
     }
 
     public static void main(String[] args) throws Exception {
-        try (Connection connection = getConnection()) {
-            TableEditor tableEditor = new TableEditor(connection);
+            TableEditor tableEditor = new TableEditor(new Properties());
             tableEditor.createTable("testTable");
             System.out.println(tableEditor.getTableScheme("testTable"));
-            tableEditor.addColumn("testTable", "Amount", "int");
+            tableEditor.addColumn("testTable", "Name", "text");
             System.out.println(tableEditor.getTableScheme("testTable"));
-            tableEditor.renameColumn("testTable", "Amount", "Left");
+            tableEditor.renameColumn("testTable", "Name", "FULL_NAME");
             System.out.println(tableEditor.getTableScheme("testTable"));
-            tableEditor.dropColumn("testTable", "Left");
+            tableEditor.dropColumn("testTable", "FULL_NAME");
             System.out.println(tableEditor.getTableScheme("testTable"));
             tableEditor.dropTable("testTable");
-            System.out.println(tableEditor.getTableScheme("testTable"));
-        }
     }
 }
