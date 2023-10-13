@@ -20,4 +20,5 @@ public interface Generate  {
         }
         return text;
     }
+
 }
