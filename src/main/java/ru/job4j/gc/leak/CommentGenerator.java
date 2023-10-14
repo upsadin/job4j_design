@@ -23,11 +23,7 @@ public class CommentGenerator implements Generate {
     }
 
     private void read() {
-        try {
-            phrases = read(PATH_PHRASES);
-        } catch (IOException e) {
-            throw new IllegalArgumentException(e);
-        }
+        phrases = read(PATH_PHRASES);
     }
 
     public List<Comment> getComments() {
