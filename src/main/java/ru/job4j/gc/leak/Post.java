@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Post {
 
-    private Integer id;
+    private int id;
 
     private String text;
 

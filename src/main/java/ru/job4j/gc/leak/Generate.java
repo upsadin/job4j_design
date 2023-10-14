@@ -11,11 +11,11 @@ public interface Generate  {
 
     void generate();
 
-    default List<String> read(String path) throws IOException {
+    default List<String> read(String path) {
         List<String> text = new ArrayList<>();
         try (Stream<String> lines = Files.lines(Paths.get(path))) {
             lines.forEach(text::add);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return text;
