@@ -14,12 +14,15 @@ public abstract class AbstractCache<K, V> {
     }
 
     public final V get(K key) {
-        V strong = cache.get(key).get();
-        if (!cache.containsKey(key) || strong == null) {
+
+        if (!cache.containsKey(key)) {
             put(key, load(key));
         }
-        V value = cache.get(key).get();
-        return value;
+        V strong = cache.get(key).get();
+        if (strong == null) {
+            put(key, load(key));
+        }
+        return strong;
     }
 
     protected abstract V load(K key);
