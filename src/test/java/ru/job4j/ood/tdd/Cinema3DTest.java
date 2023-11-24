@@ -76,7 +76,7 @@ public class Cinema3DTest {
 
     @Test
     public void whenCinemaIsNullThenGetException() {
-        Account account = new AccountCinema();;
+        Account account = new AccountCinema();
         Cinema cinema = null;
         Calendar date = Calendar.getInstance();
         assertThatThrownBy(() -> cinema.buy(account, 1, 1, date)).
