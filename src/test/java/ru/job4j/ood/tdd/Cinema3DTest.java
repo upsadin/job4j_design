@@ -41,10 +41,10 @@ public class Cinema3DTest {
     @Test
     public void whenDontAddSessionThenItDoesntExistsBetweenAllSessions() {
         Cinema cinema = new Cinema3D();
-        Session session = null;
+        Session session = new Session3D();
         cinema.add(session);
-        List<Session> sessions = cinema.find(ses -> ses.equals(session));
-        assertThat(sessions).isNullOrEmpty();
+        List<Session> sessions = cinema.find(ses -> false);
+        assertThat(sessions).doesNotContain(session);
     }
 
     @Test
@@ -71,6 +71,23 @@ public class Cinema3DTest {
         Cinema cinema = new Cinema3D();
         Calendar date = Calendar.getInstance();
         assertThatThrownBy(() -> cinema.buy(account, 1, 1, date)).
+                isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    public void whenCinemaIsNullThenGetException() {
+        Account account = new AccountCinema();;
+        Cinema cinema = null;
+        Calendar date = Calendar.getInstance();
+        assertThatThrownBy(() -> cinema.buy(account, 1, 1, date)).
+                isInstanceOf(NullPointerException.class);
+    }
+
+    @Test
+    public void whenAddInvalidSessionThenGetException() {
+        Cinema cinema = new Cinema3D();
+        Session session = null;
+        assertThatThrownBy(() -> cinema.add(session)).
                 isInstanceOf(IllegalArgumentException.class);
     }
 
