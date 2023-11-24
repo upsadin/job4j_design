@@ -7,6 +7,14 @@ public class Fool {
 
     private static int startAt = 1;
 
+    public static int getStartAt() {
+        return startAt;
+    }
+
+    public static void setStartAt(int startAt) {
+        Fool.startAt = startAt;
+    }
+
     public static String comp() {
         String rsl = "";
         if (startAt % 3 == 0 && startAt % 5 == 0) {
