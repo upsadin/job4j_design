@@ -45,4 +45,14 @@ class SimpleGeneratorTest {
                 .hasMessageContaining("Передан лишний ключ \"surnname\"");
     }
 
+    @Test
+    public void whenKeysDontExist() {
+        SimpleGenerator generator = new SimpleGenerator();
+        Map<String, String> map = new HashMap<>();
+        String rsl = generator.produce("I am a ${name}, Who are ${subject}?", map);
+        assertThatThrownBy(() -> generator.produce("I am a ${name}, Who are ${subject}?", map))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("отсутствует ключ \"name\", \"subject\"");
+    }
+
 }
