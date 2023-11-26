@@ -5,17 +5,7 @@ import java.util.function.Predicate;
 
 public class Fool {
 
-    private static int startAt = 1;
-
-    public static int getStartAt() {
-        return startAt;
-    }
-
-    public static void setStartAt(int startAt) {
-        Fool.startAt = startAt;
-    }
-
-    public static String comp() {
+    public static String comp(int startAt) {
         String rsl = "";
         if (startAt % 3 == 0 && startAt % 5 == 0) {
             rsl = "FizzBuzz";
@@ -31,12 +21,13 @@ public class Fool {
 
     public static void main(String[] args) {
         System.out.println("Игра FizzBuzz.");
+        int startAt = 1;
         var io = new Scanner(System.in);
         while (startAt < 100) {
-            System.out.println(comp());
+            System.out.println(comp(startAt));
             startAt++;
             var answer = io.nextLine();
-            if (!comp().equals(answer)) {
+            if (!comp(startAt).equals(answer)) {
                 System.out.println("Ошибка. Начинай снова.");
                 startAt = 0;
             }

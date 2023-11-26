@@ -8,25 +8,25 @@ class FoolTest {
 
     @Test
     void whenStartAtEqualsFizzBuzz() {
-        Fool.setStartAt(15);
-        assertThat(Fool.comp()).isEqualTo("FizzBuzz");
+        int startAt = 15;
+        assertThat(Fool.comp(startAt)).isEqualTo("FizzBuzz");
     }
 
     @Test
     void whenStartAtEqualsFizz() {
-        Fool.setStartAt(18);
-        assertThat(Fool.comp()).isEqualTo("Fizz");
+        int startAt = 18;
+        assertThat(Fool.comp(startAt)).isEqualTo("Fizz");
     }
 
     @Test
     void whenStartAtEqualsBuzz() {
-        Fool.setStartAt(25);
-        assertThat(Fool.comp()).isEqualTo("Buzz");
+        int startAt = 25;
+        assertThat(Fool.comp(startAt)).isEqualTo("Buzz");
     }
 
     @Test
     void whenStartAtEquals53() {
-        Fool.setStartAt(53);
-        assertThat(Fool.comp()).isEqualTo("53");
+        int startAt = 53;
+        assertThat(Fool.comp(startAt)).isEqualTo("53");
     }
 }
