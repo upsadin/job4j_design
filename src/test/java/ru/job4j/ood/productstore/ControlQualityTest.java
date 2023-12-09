@@ -41,7 +41,6 @@ class ControlQualityTest {
     public void whenPutInShopWithoutDiscount() {
         Products normalEggs = new Food("Eggs", LocalDate.now().plusDays(7), LocalDate.now().minusDays(8), 100, 0);
         control.check(normalEggs);
-//        assertThat(shop.getStore()).contains(normalEggs);
         assertThat(shop.getStore().get(0).getPrice()).isEqualTo(100);
     }
 
