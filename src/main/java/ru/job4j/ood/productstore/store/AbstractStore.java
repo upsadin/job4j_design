@@ -33,6 +33,10 @@ public abstract class AbstractStore implements Store {
         return store;
     }
 
+    public void clearStore() {
+        store.clear();
+    }
+
     public void add(Products product) {
         store.add(product);
     }

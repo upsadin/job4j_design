@@ -10,4 +10,5 @@ public interface Store {
      double getTopTerm();
      double getBottomTerm();
      List<Products> getStore();
+     void clearStore();
 }

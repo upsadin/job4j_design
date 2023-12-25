@@ -51,4 +51,13 @@ class ControlQualityTest {
         assertThat(shop.getStore().get(0).getPrice()).isEqualTo(80);
     }
 
+    @Test
+    public void whenPutInWarehouseThenResort() {
+        Products eggs = new Food("Eggs", LocalDate.now().plusDays(12), LocalDate.now().minusDays(3), 100, 0);
+        control.check(eggs);
+        eggs.setExpiryDate(LocalDate.now());
+        control.resort();
+        assertThat(trash.getStore()).contains(eggs);
+    }
+
 }
